@@ -1,0 +1,50 @@
+import math
+import tkinter as tk
+win = tk.Tk()
+sirka = 500
+canvas = tk.Canvas(win, width=sirka, height=500, bg="grey")
+canvas.pack()
+fr = open("noty.txt", "r")
+odstupy = 10
+medzi_o = 50
+medzi_n = 10
+velkost_n = 10
+x = 0
+y = 30
+hodnota = {"c":50,"d":45,"e":40,"f":35,"g":30,"a":25,"h":20}
+def osnova(pocet):
+    global x,y
+    for i in range(pocet):
+        for a in range(5):
+            canvas.create_line(x,y,x+sirka,y)
+            y += odstupy
+        y += medzi_o
+
+
+def noty(n):
+    xx = 10
+    yy = 30
+    temp = n
+    pocet_na_jednu = sirka // (velkost_n + medzi_n)
+    while len(temp) != 0:
+        temp = temp[:pocet_na_jednu]
+        for i in temp:
+            hod = hodnota[i]
+            canvas.create_oval(xx,yy+hod-3,xx+velkost_n,yy+hod+3, fill="black")
+            xx += medzi_n + velkost_n
+        if len(temp) < pocet_na_jednu:
+            return
+        else:
+            temp = n[pocet_na_jednu:]
+            yy += 2*medzi_o
+            xx = 10
+
+
+subor = fr.read().strip()
+a = len(subor)
+b = a * (medzi_n + velkost_n)
+pocet_o =math.ceil(b / sirka)
+
+osnova(pocet_o)
+noty(subor)
+win.mainloop()
