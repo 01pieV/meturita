@@ -1,0 +1,33 @@
+import tkinter as tk, random
+win = tk.Tk()
+canvas = tk.Canvas(width=700, height=800)
+canvas.pack()
+lode = []
+def lodicka(x, y,i):
+    tag = f"lod{i}"
+    plachta = random.randint(-3, 3)
+    canvas.create_line(x, y, x, y-25, x+10+plachta, y-10, x, y-5,tags=tag)
+    canvas.create_polygon(x-20, y, x+20, y, x+10, y+8, x-10, y+8,tags=tag)
+    lode.append(tag)
+x = 30
+y = 50
+for i in range(15):
+    lodicka(x, y,i)
+    y += 50
+
+canvas.create_line(650,0,650,800,fill="red", width=2)
+
+def pohyb():
+    for lod in lode:
+        dx = random.randint(1, 10)
+        canvas.move(lod, dx, 0)
+
+        x1, y1, x2, y2 = canvas.bbox(lod)
+        if x2 >= 650:
+            canvas.create_text(350,350,text=f"Vyhrala {lod}")
+            return
+
+    canvas.after(100, pohyb)
+
+pohyb()
+win.mainloop()
