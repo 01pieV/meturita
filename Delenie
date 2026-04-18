@@ -1,0 +1,54 @@
+import tkinter as tk
+import random
+win = tk.Tk()
+canvas = tk.Canvas(win, width=700, height=400)
+canvas.pack()
+
+dele = None
+deli = None
+farby = ["blue", "green","red"]
+
+def vypocet():
+    global dele,deli
+    dele = random.randint(11,20)
+    deli = random.randint(2,9)
+    tex = f"{dele} : {deli} = "
+    canvas.create_text(110,40,text=tex,font=("Arial",40,"bold"),fill="black")
+sprava = None
+def skuska():
+    global sprava
+    xy = 20
+    hod = int(entry.get())
+    vysledok = dele // deli
+    if sprava is not None:
+        canvas.delete(sprava)
+    if hod == vysledok:
+        canvas.create_text(115,90,text= "SPRÁVNE!!",font=("Arial",30,"bold"),fill="black")
+        for i in range(vysledok):
+            for aa in range(deli):
+                canvas.create_oval(xy-10,120,xy+10,140,fill=farby[i%len(farby)])
+                xy += 25
+        xy += 50
+        for ad in range(dele % deli):
+            canvas.create_oval(xy-10,120,xy+10,140,fill="yellow")
+            xy += 25
+        win.after(5000, novy)
+    else:
+        sprava = canvas.create_text(115, 90, text="NESPÁVNE", font=("Arial", 30, "bold"), fill="black")
+
+
+def novy():
+    canvas.delete("all")
+    vypocet()
+
+
+entry = tk.Entry(win, justify="center")
+entry.pack(pady=5)
+
+btn = tk.Button(win, text="Over", command=skuska)
+btn.pack()
+
+vypocet()
+
+
+win.mainloop()
