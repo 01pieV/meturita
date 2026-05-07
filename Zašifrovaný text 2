@@ -1,0 +1,41 @@
+import random
+v = input()
+fr = open("zasifrovany_text_2.txt","r")
+text = fr.readlines()
+
+vysledok = ""
+
+def sifroavnie():
+    global vysledok
+    for line in text:
+        line = line.strip()
+        posun = random.randint(1,26)
+        vysledok += str(chr(posun+96))
+        for char in line:
+            if char.islower() and (ord(char)>96 and ord(char)<123):
+                a = ord(char)-96
+                vysledok += chr((a+posun) % 26 + 96)
+            else:
+                vysledok += char
+        vysledok += "\n"
+
+def desifrovanie():
+    global vysledok
+    for line in text:
+        line = line.strip()
+        posun = ord(line[0])-96
+        for aa in range(1,len(line)):
+            pismeno = line[aa]
+            if pismeno.islower() and (ord(pismeno)>96 and ord(pismeno)<123):
+                a = ord(pismeno)-97
+                vysledok += chr((a - posun) % 26 + 97)
+            else:
+                vysledok += pismeno
+        vysledok += "\n"
+
+if v == "s":
+    sifroavnie()
+elif v == "d":
+    desifrovanie()
+
+print(vysledok)
