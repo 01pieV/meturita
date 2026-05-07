@@ -1,0 +1,23 @@
+import random
+
+fr = open('virus.txt', 'r')
+text = fr.readlines()
+
+vystup = ""
+
+if random.choice([True, False]):
+    random.shuffle(text)
+
+for line in text:
+    line = line.strip().split()
+    if random.choice([True, False]):
+        random.shuffle(line)
+    for word in line:
+        if random.choice([True, False]):
+            word = word[::-1]
+            vystup += word + " "
+        else:
+            vystup += word + " "
+    vystup +="\n"
+
+print(vystup)
