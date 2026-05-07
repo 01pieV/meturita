@@ -1,0 +1,25 @@
+import random
+
+fr = open("loteria_2.txt","r")
+t = fr.readlines()
+
+vyhra = []
+
+p = {1:0,2:0,3:0,5:0,6:0}
+for i in range (6):
+    vyhra.append(str(random.randint(1,50)))
+
+for typ in t:
+    typ = typ.strip().split()
+    spoloc = set(typ) & set(vyhra)
+    if len(spoloc)>0:
+        vys = ", ".join(spoloc)
+        pocet = len(spoloc)
+
+        if pocet in p:
+            p[pocet] += 1
+
+        print(vys + " - " + str(pocet))
+
+for a,b in p.items():
+    print(f"práve {a} - {b}")
