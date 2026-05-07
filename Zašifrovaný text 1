@@ -1,0 +1,53 @@
+vstup = input()
+kluc = input()
+verzia = input()
+
+prilozeny_kluc = []
+posun = []
+vystup = []
+
+pocet = len(vstup)//len(kluc)
+zvysok = len(vstup)%len(kluc)
+
+for i in range(pocet):
+    prilozeny_kluc.append(kluc)
+prilozeny_kluc.append(kluc[:zvysok])
+prilozeny_kluc = "".join(prilozeny_kluc)
+
+for a in range(len(vstup)):
+    if vstup[a].islower() and vstup[a].isalpha():
+        posun.append(str(ord(prilozeny_kluc[a])-96))
+    else:
+        posun.append("-")
+posun = "".join(posun)
+
+def siforavanie():
+    for aa in range(len(vstup)):
+        if vstup[aa].islower():
+            ac = ord(vstup[aa])-96
+            bc = int(posun[aa])
+            zmena = chr((ac + bc) % 26 + 96)
+            vystup.append(zmena)
+        else:
+            vystup.append(vstup[aa])
+
+def desifrovanie():
+    for aa in range(len(vstup)):
+        if vstup[aa].islower():
+            ac = ord(vstup[aa])-96
+            bc = int(posun[aa])
+            zmena = chr((ac - bc) % 26 + 96)
+            vystup.append(zmena)
+        else:
+            vystup.append(vstup[aa])
+
+if verzia == "d":
+    desifrovanie()
+elif verzia == "s":
+    siforavanie()
+
+print(prilozeny_kluc)
+print(posun)
+
+print("".join(vystup))
+
