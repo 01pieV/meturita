@@ -1,0 +1,33 @@
+fr = open('spokojnost_1.txt', 'r')
+hlasy = fr.readlines()
+pocet = len(hlasy)
+print(pocet)
+
+h = {}
+h_n = {}
+for i in hlasy:
+    i = i.strip().split(":")
+    if i[0] not in h:
+        h[i[0]] = 0
+        h_n[i[0]] = 0
+
+for a in hlasy:
+    a = a.strip().split()
+    if a[1] == "áno":
+        h[a[0][0:2]] += 1
+    else:
+        h_n[a[0][0:2]] += 1
+
+h = dict(sorted(h.items()))
+h_n = dict(sorted(h_n.items()))
+
+naj_s = max(h, key=h.get)
+naj_n = max(h_n, key=h_n.get)
+print(naj_s + " hod. - " + str(h[naj_s]))
+print(naj_n + " hod. - " + str(h_n[naj_n]))
+
+for a,b in h.items():
+    if b != 0:
+        nes = h_n[a]
+        perc = (b/(b+nes))*100
+        print(a, "hod. - ",perc, "%")
