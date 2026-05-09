@@ -1,0 +1,26 @@
+fr = open('dekompresia_obrazka_1.txt', 'r')
+a,b = fr.readline().split()
+a = int(a)
+b = int(b)
+roz = a*b
+print(f"{a},{b} - počet pixelov: {roz}")
+v = ""
+def spracuj_riadok(riadok):
+    global v
+    riadok = riadok.split()
+    vys = ""
+    for i in range(len(riadok)):
+        prve = int(riadok[i])
+        if i %2 ==0:
+            akt = "0"
+            vys += akt * prve
+        else:
+            akt = "1"
+            vys += akt * prve
+    v += vys + "\n"
+
+for ria in fr:
+    ria = ria.strip()
+    spracuj_riadok(ria)
+
+print(v)
