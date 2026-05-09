@@ -1,0 +1,30 @@
+fr = open('hlasovanie_1.txt','r')
+fw = open("5220.txt", "w")
+hlasy = fr.readlines()
+
+pocet = len(hlasy)
+print(pocet)
+riadok = 1
+for h in hlasy:
+    h = h.strip()
+    if h == "5220":
+        fw.write(str(riadok) + "." + " - 5220" + "\n")
+    riadok += 1
+b = []
+for i in hlasy:
+    i = i.strip()
+    if i != "5220" and i not in b:
+        b.append(i)
+b = sorted(b)
+
+for sut in b:
+    fw_ostatne = open(f"{sut}.txt", "w")
+    riadok = 1
+    for e in hlasy:
+        e = e.strip()
+        if e == sut:
+            fw_ostatne.write(str(riadok) + "." + " - " + sut + "\n")
+        riadok += 1
+
+    fw_ostatne.close()
+fw.close()
