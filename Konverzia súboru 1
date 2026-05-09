@@ -1,0 +1,23 @@
+fr = open('ciernobiely_obrazok_1.txt', 'r')
+a,b = fr.readline().split()
+a = int(a)
+b = int(b)
+roz = a*b
+print(f"{a},{b} - počet pixelov: {roz}")
+v = ""
+def spracuj_riadok(riadok):
+    global v
+    vys = ""
+    for i in range(0,len(riadok),2):
+        akt = riadok[i:i+2]
+        cislo = int(akt,16)
+        if cislo >= 128:
+            vys += "1 "
+        else:
+            vys += "0 "
+    v += vys + "\n"
+
+for riadok in fr:
+    riadok = riadok.strip()
+    spracuj_riadok(riadok)
+print(v)
