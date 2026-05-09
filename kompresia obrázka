@@ -1,0 +1,31 @@
+fr = open('kompresia_obrazka_1.txt', 'r')
+a,b = fr.readline().split()
+a = int(a)
+b = int(b)
+rozmery = a*b
+print(f"{a},{b} - počet bodov: {rozmery}")
+
+v = ""
+
+def spracuj_riadok(riadok):
+    global v
+    vys = ""
+    pocitadlo = 1
+    prvy = riadok[0]
+    if prvy == "1":
+        vys += "0 "
+    for i in range(len(riadok)-1):
+        akt = riadok[i]
+        if akt == riadok[i+1]:
+            pocitadlo += 1
+        else:
+            vys += str(pocitadlo) + " "
+            pocitadlo = 1
+    vys += str(pocitadlo)
+    v += vys + "\n"
+
+
+for riadok in fr:
+    riadok = riadok.strip()
+    spracuj_riadok(riadok)
+print(v)
