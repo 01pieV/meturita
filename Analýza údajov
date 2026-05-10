@@ -1,0 +1,36 @@
+fr = open('spokojnost_1.txt', 'r')
+hlasy = fr.readlines()
+pocet = len(hlasy)
+
+vyjadrenia = {}
+
+for hlas in hlasy:
+    hlas = hlas.strip().split(":")
+    if hlas[0] not in vyjadrenia:
+        vyjadrenia[hlas[0]] = 0
+    vyjadrenia[hlas[0]] += 1
+vyjadrenia = dict(sorted(vyjadrenia.items()))
+print(pocet)
+print(vyjadrenia)
+
+den = 1
+vyj = 0
+hod = 0
+mint = 0
+for h in hlasy:
+    h = h.strip().split(":")
+    if int(h[0]) > hod:
+        hod = int(h[0])
+        mint = int(h[1][0:2])
+        vyj += 1
+    elif int(h[0]) == hod and int(h[1][0:2]) >= mint:
+        hod = int(h[0])
+        mint = int(h[1][0:2])
+        vyj += 1
+    else:
+        print(f"{den}. deň - počet reakcií: {vyj}")
+        den += 1
+        vyj = 1
+        hod = int(h[0])
+        mint = int(h[1][0:2])
+print(f"{den}. deň - počet reakcií: {vyj}")
