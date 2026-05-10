@@ -1,0 +1,61 @@
+fr = open('ucenie_sa_slovicok.txt',"r")
+slov = []
+anglicke = []
+
+slova = fr.readlines()
+
+for s in range(0,len(slova),2):
+   slov.append(slova[s].strip())
+   anglicke.append(slova[s+1].strip())
+
+mode = input("s/a: ")
+
+if mode == "s":
+    temp = []
+    temp_a = []
+    while len(slov) > 0:
+        for sl in slov:
+            print(sl)
+            odpoved = input()
+            index = slov.index(sl)
+            if odpoved != anglicke[index]:
+                print("nespravne")
+            elif odpoved == anglicke[index]:
+                print("spravne")
+                if sl in slov:
+                    temp.append(sl)
+                    temp_a.append(anglicke[index])
+        for h in temp:
+            inx = slov.index(h)
+            slov.remove(h)
+            anglicke.remove(anglicke[inx])
+        temp = []
+        temp_a = []
+
+    print()
+    print("vyhral si")
+
+if mode == "a":
+    temp = []
+    temp_a = []
+    while len(anglicke) > 0:
+        for sl in anglicke:
+            print(sl)
+            odpoved = input()
+            index = anglicke.index(sl)
+            if odpoved != slov[index]:
+                print("nespravne")
+            elif odpoved == slov[index]:
+                print("spravne")
+                if sl in anglicke:
+                    temp.append(sl)
+                    temp_a.append(slov[index])
+        for h in temp:
+            inx = anglicke.index(h)
+            anglicke.remove(h)
+            slov.remove(slov[inx])
+        temp = []
+        temp_a = []
+
+    print()
+    print("vyhral si")
