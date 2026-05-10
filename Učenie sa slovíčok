@@ -11,6 +11,7 @@ for s in range(0,len(slova),2):
 mode = input("s/a: ")
 
 if mode == "s":
+    nesp = 0
     temp = []
     temp_a = []
     while len(slov) > 0:
@@ -20,6 +21,7 @@ if mode == "s":
             index = slov.index(sl)
             if odpoved != anglicke[index]:
                 print("nespravne")
+                nesp += 1
             elif odpoved == anglicke[index]:
                 print("spravne")
                 if sl in slov:
@@ -33,9 +35,10 @@ if mode == "s":
         temp_a = []
 
     print()
-    print("vyhral si")
+    print(f"vyhral si - {nesp} nesprávne")
 
 if mode == "a":
+    nesp = 0
     temp = []
     temp_a = []
     while len(anglicke) > 0:
@@ -45,6 +48,7 @@ if mode == "a":
             index = anglicke.index(sl)
             if odpoved != slov[index]:
                 print("nespravne")
+                nesp += 1
             elif odpoved == slov[index]:
                 print("spravne")
                 if sl in anglicke:
@@ -58,4 +62,4 @@ if mode == "a":
         temp_a = []
 
     print()
-    print("vyhral si")
+    print(f"vyhral si - {nesp} nesprávne")
