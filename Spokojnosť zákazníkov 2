@@ -1,0 +1,49 @@
+import tkinter as tk
+win = tk.Tk()
+canvas = tk.Canvas(win, width=500, height=500)
+canvas.pack()
+
+fr = open("spokojnost_1.txt", "r")
+hlasy = fr.readlines()
+pocet = len(hlasy)
+
+nespok = {}
+
+for hlas in hlasy:
+    hlas = hlas.strip().split()
+    if hlas[0][0:2] not in nespok:
+        nespok[hlas[0][0:2]] = 0
+    if hlas[1] == "nie":
+        nespok[hlas[0][0:2]] += 1
+
+nespok = dict(sorted(nespok.items()))
+print(nespok)
+naj = max(nespok, key=nespok.get)
+print(f"najviac nespokojných bolo: {naj} - {nespok[naj]}")
+
+x = 10
+y = 490
+for i in range(24):
+    if i < 10:
+        canvas.create_text(x, y, text="0" + str(i), fill="black")
+        a = "0" + str(i)
+        if a in nespok and nespok[a] != 0:
+            canvas.create_line(x, y-10, x, y - nespok[a]*50,width=6, fill="red")
+        else:
+            canvas.create_line(x, y-10, x, y-11, width=6, fill="black")
+        x += 21
+    else:
+        canvas.create_text(x, y, text= str(i), fill="black")
+        a = str(i)
+        if a in nespok and nespok[a] != 0:
+            canvas.create_line(x, y - 10, x, y - nespok[a] * 50, width=6, fill="red")
+        else:
+            canvas.create_line(x, y - 10, x, y - 11, width=6, fill="black")
+        x += 21
+
+for a,b in nespok.items():
+    if b != 0:
+        print(f"{a} - {b}")
+
+
+win.mainloop()
