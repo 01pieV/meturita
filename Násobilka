@@ -1,0 +1,33 @@
+import random
+fw = open('vysledok.txt','w')
+m = []
+m2 = []
+body = 0
+mm = []
+mm2 = []
+for i in range(10):
+    m.append(random.randint(0, 10))
+    m2.append(random.randint(0, 10))
+
+for cis in range(len(m)):
+    print(m[cis], " * ",m2[cis] )
+    vys = int(input())
+    if vys == m[cis]*m2[cis]:
+        body += 1
+    else:
+        mm.append(m[cis])
+        mm2.append(m2[cis])
+
+while len(mm)>0:
+    for t in range(len(mm)):
+        print(mm[t], " * ",mm2[t])
+        vyss = int(input())
+        if vyss == mm[t]*mm2[t]:
+            mm.pop(mm.index(mm[t]))
+            mm2.pop(mm2.index(mm2[t]))
+print(body)
+
+for g in range(len(m)):
+    fw.write(str(m[g]) + " * " + str(m2[g]) + "\n")
+
+fw.close()
