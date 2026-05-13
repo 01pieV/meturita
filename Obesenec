@@ -1,0 +1,40 @@
+import random
+fr = open("obesenec.txt","r")
+slova = []
+for line in fr:
+    line = line.strip()
+    slova.append(line)
+
+had_s = random.choice(slova)
+pocet = len(had_s)
+print(had_s)
+neuhadnute = 0
+slovo = "*" * pocet
+while neuhadnute <= 10:
+    if slovo == had_s:
+        print("vyhral si")
+        break
+    tamp = ""
+    print(slovo)
+    pismeno = input()
+    for pis in had_s:
+        if pis == pismeno:
+            tamp += pis
+        else:
+            tamp += "*"
+    fin = ""
+    pocet = 0
+    for a in range(len(tamp)):
+        if tamp[a].isascii() and tamp[a] != "*":
+            fin += tamp[a]
+        elif slovo[pocet].isalpha():
+            fin += slovo[pocet]
+        else:
+            fin += "*"
+        pocet += 1
+
+    if pismeno not in had_s:
+        neuhadnute += 1
+    slovo = fin
+else:
+    print("prehral si")
