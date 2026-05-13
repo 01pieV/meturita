@@ -1,0 +1,31 @@
+veta = input("veta: ")
+slova = veta.split()
+pocet = len(slova)
+vysledok = ""
+vysledok2 = []
+for i in range(pocet):
+    if i %2 == 0:
+        vysledok += slova[i].upper()
+    else:
+        vysledok += slova[i].lower()
+print(pocet)
+print(vysledok)
+print()
+velke = ""
+male = ""
+for a in range(len(vysledok)-1):
+    if vysledok[a].islower():
+        male += vysledok[a]
+    if vysledok[a+1].isupper():
+        male += " "
+    if vysledok[a].isupper():
+        velke += vysledok[a]
+    if vysledok[a+1].islower():
+        velke += " "
+velke = velke.split()
+male = male.split()
+
+for aa in range(len(velke)):
+    vysledok2.append(velke[aa])
+    vysledok2.append(male[aa].upper())
+print(" ".join(vysledok2))
