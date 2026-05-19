@@ -1,0 +1,32 @@
+fr = open('ciernobiely_obrazok_1.txt', 'r')
+import tkinter as tk
+win = tk.Tk()
+
+riadok_rozmery = fr.readline().split()
+sirka = int(riadok_rozmery[0])
+vyska = int(riadok_rozmery[1])
+odtiene = {}
+for riadok in fr:
+    riadok = riadok.strip()
+    for i in range(0,len(riadok),2):
+        farba = riadok[i:i+2]
+        hodnota = int(farba,16)
+        if hodnota in odtiene:
+            odtiene[hodnota] += 1
+        else:
+            odtiene[hodnota] = 1
+naj = max(odtiene.values())
+print(naj)
+
+mierka = 500/naj
+
+canvas = tk.Canvas(win, width=600, height=600)
+canvas.pack()
+zoradeny = dict(sorted(odtiene.items()))
+x = 0
+y = 600
+for o,hod in zoradeny.items():
+    vyska = hod*mierka
+    canvas.create_rectangle(x,y,x+2,y-vyska,fill="grey",outline="")
+    x += 2
+win.mainloop()
