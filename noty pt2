@@ -1,0 +1,51 @@
+import math
+import tkinter as tk
+sirka = 500
+
+fr = open("noty.txt", "r")
+noty = fr.readline().strip()
+hodnota = {"c":55,"d":50,"e":45,"f":40,"g":35,"a":30,"h":25}
+
+nota = 10
+medzi_n = 10
+medzi_ciarami = 10
+medzi_o = 30
+
+na_jednu = (sirka//(nota+medzi_n))-1
+pocet_n = math.ceil(len(noty)/na_jednu)
+win = tk.Tk()
+screen = tk.Canvas(win,width=sirka, height=500,bg="gray")
+screen.pack()
+print(pocet_n)
+
+y = 20
+def kresli_osnovu(pocet):
+    global y
+    for i in range(pocet):
+        for a in range(5):
+            screen.create_line(0,y,sirka,y,fill="black")
+            y += medzi_ciarami
+        y += medzi_o
+
+def kresli_noty(no):
+    yy = 20
+    x = 10
+    temp = no
+    plno = len(no)//na_jednu
+    zvysok = len(no)%na_jednu
+    for i in range(plno):
+        for a in range(na_jednu):
+            hod = hodnota[temp[a]]
+            screen.create_oval(x,yy+hod,x+nota+5,yy+hod-10,fill="black")
+            x += nota + medzi_n
+        yy += 5*medzi_ciarami + medzi_o
+        x = 10
+        temp = no[na_jednu:]
+    for c in range(zvysok):
+        hod = hodnota[temp[c]]
+        screen.create_oval(x,yy+hod,x+nota+5,yy+hod-10,fill="black")
+        x += nota + medzi_n
+
+kresli_osnovu(pocet_n)
+kresli_noty(noty)
+win.mainloop()
