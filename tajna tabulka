@@ -1,0 +1,25 @@
+kluc = {" ":0,"ABC":1,"DEF":2,"GHI":3,"JKL":4,"MNO":5,"PQR":6,"STU":7,"VWX":8,"YZ":9}
+
+text = input()
+temp = []
+for i in range(len(text)):
+    for a,b in kluc.items():
+        if text[i] in a:
+            cislo = b
+            index = a.index(text[i])+1
+            temp.append(str(cislo)*(int(index)))
+print(" ".join(temp))
+
+pocet = {}
+for cis in temp:
+    for c in cis:
+        if c not in pocet:
+            pocet[c] = 1
+        else:
+            pocet[c] += 1
+naj = max(pocet.values())
+nn = []
+for n,m in pocet.items():
+    if m == naj:
+        nn.append(n)
+print(f"najviac zvolene policka: {", ".join(nn)}")
