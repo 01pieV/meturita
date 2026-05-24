@@ -1,51 +1,54 @@
 import tkinter as tk
 import random
 win = tk.Tk()
-canvas = tk.Canvas(win,height=200,width=500, bg="white")
+canvas = tk.Canvas(win, width=500, height=300)
 canvas.pack()
 
-canvas.create_text(250,20,text="Pyrotechnik",fill="blue",font=("Times New Roman",20))
-canvas.create_text(250,40,text="označ správny kábel",fill="grey",font=("Times New Roman",10))
-
 farby = ["green","red","grey","blue","yellow"]
+canvas.create_text(250,30,text= "Pyrotechnik",fill="blue",font=("Arial",30))
+canvas.create_text(250,60,text= "vyber správny káblik",fill="grey",font=("Arial",10,"bold"))
 
-ciary = []
+kable = []
 x = 50
-y = 60
+y = 100
 for i in range(5):
-    id = canvas.create_line(x,y,x+300,y,fill=farby[i],width=10)
-    y += 10
-    ciary.append(id)
-
-vyhra = random.choice(ciary)
-print(vyhra)
+    tag = i+1
+    canvas.create_line(x,y+5,x+300,y+5,width=10,fill=farby[i],tags=tag)
+    y+=10
+    kable.append(tag)
+vyh = random.choice(kable)
+print(vyh)
 
 cas = 60
 hra = True
-cas_text = canvas.create_text(350,150,text = cas)
-
-def odpocitaj():
-    global cas, hra
+c = canvas.create_text(400,200,text=cas,font=("Arial",30))
+def zmena_c():
+    global cas,hra
     if hra:
-        canvas.itemconfig(cas_text,text = cas,font=("Times New Roman",30))
         if cas == 0:
-            canvas.delete(cas_text)
+            canvas.delete(c)
+            canvas.create_text(400,200,text="BUM!",font=("Arial",30))
             hra = False
-            canvas.create_text(350,150,text = "koniec",font=("Times New Roman",20))
+            return
         else:
             cas -= 1
-            canvas.after(1000,odpocitaj)
+            canvas.itemconfig(c,text=cas)
+            canvas.after(1000,zmena_c)
+zmena_c()
 
 def klik(event):
     global hra
     if not hra:
         return
     obj = canvas.find_withtag("current")[0]
-    if obj == vyhra:
-        canvas.create_text(350,180,text="vyhral si!",fill="red",font=("Times New Roman",30))
-        hra = False
-
+    if obj:
+        kab = canvas.gettags(obj)[0]
+        if vyh == int(kab):
+            canvas.create_text(250, 200, text="správne!!", font=("Arial", 30))
+            hra = False
+        else:
+            canvas.create_text(250, 200, text="nesprávne!!", font=("Arial", 30))
+            hra = False
 
 canvas.bind("<Button-1>",klik)
-odpocitaj()
 win.mainloop()
