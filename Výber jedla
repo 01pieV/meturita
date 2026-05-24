@@ -1,0 +1,41 @@
+import tkinter as tk
+fw = open("vystup.txt","w").close()
+win = tk.Tk()
+canvas = tk.Canvas(win, width=500, height=300)
+canvas.pack()
+entry = tk.Entry(win)
+entry.pack()
+x = 40
+y = 50
+canvas.create_text(250,20,text="VÝBER JEDLA",font=("Arial",20))
+canvas.create_text(250,290,text="kód študenta",font=("Arial",10))
+vyber = []
+farby = ["green","red","blue","yellow"]
+for i in range(4):
+    tag = i+1
+    canvas.create_rectangle(x, y, x + 100, y + 100, fill=farby[i],tags=tag)
+    x += 105
+
+def klik(event):
+    obj = canvas.find_withtag("current")
+    if obj:
+        ta = int(canvas.gettags(obj)[0])
+        cislo_s = entry.get()
+        if len(cislo_s) != 0:
+            temp = ""
+            if ta == 1:
+                temp += str(cislo_s) + " z\n"
+            elif ta == 2:
+                temp += str(cislo_s) + " c\n"
+            elif ta == 3:
+                temp += str(cislo_s) + " m\n"
+            elif ta == 4:
+                temp += str(cislo_s) + " o\n"
+            fw = open("vystup.txt","a")
+            fw.write(temp)
+            fw.close()
+        else:
+            pass
+
+canvas.bind("<Button-1>", klik)
+win.mainloop()
