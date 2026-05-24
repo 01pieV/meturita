@@ -1,0 +1,58 @@
+import tkinter as tk
+
+window = tk.Tk()
+fr = open('ciarovy_kod_1.txt', "r")
+kody = []
+for lina in fr:
+    lina = lina.strip()
+    kody.append(lina)
+
+canvas = tk.Canvas(window, width=400, height=400)
+canvas.pack()
+
+x = 15
+y = 100
+y_s = 20
+
+def kresli(cisla):
+    global x, y, y_s
+    prve = int(cisla[0])
+    posledne = int(cisla[-1])
+    ostatok = cisla[1:-1]
+    canvas.create_text(x + 30, y - 10, text=cisla)
+    canvas.create_line(x - 5, y, x - 5, y_s, fill="black", width=prve)
+    x += 10
+    for i in range(len(ostatok)):
+        sirka = int(ostatok[i])
+        canvas.create_line(x - 5, y - 20, x - 5, y_s, fill="black", width=sirka)
+        x += 10
+    canvas.create_line(x - 5, y, x - 5, y_s, fill="black", width=posledne)
+
+cislo_kodu = 0
+def zobraz_stvoricu(event=None):
+    global x, y, y_s, cislo_kodu
+    canvas.delete("all")
+
+    if cislo_kodu < len(kody):
+        x, y, y_s = 15, 100, 20
+        kresli(kody[cislo_kodu])
+
+    if cislo_kodu + 1 < len(kody):
+        x, y, y_s = 200, 100, 20
+        kresli(kody[cislo_kodu + 1])
+
+    if cislo_kodu + 2 < len(kody):
+        x, y, y_s = 15, 250, 170
+        kresli(kody[cislo_kodu + 2])
+
+    if cislo_kodu + 3 < len(kody):
+        x, y, y_s = 200, 250, 170
+        kresli(kody[cislo_kodu + 3])
+
+    cislo_kodu += 4
+
+
+window.bind("<space>", zobraz_stvoricu)
+zobraz_stvoricu()
+
+window.mainloop()
