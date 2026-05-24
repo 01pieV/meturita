@@ -1,0 +1,42 @@
+import tkinter as tk
+fr = open('zastavba_na_ulici.txt',"r")
+win = tk.Tk()
+canvas = tk.Canvas(win, width=800, height=300)
+canvas.pack()
+budovy = []
+for line in fr:
+    line = line.strip().split()
+    budovy.append(line)
+
+x = 10
+y = 230
+for line in budovy:
+    if int(line[1]) != 0:
+        canvas.create_rectangle(x,y,x+int(line[0]),y-int(line[1]),fill="grey",outline="black")
+    else:
+        canvas.create_line(x, y, x + int(line[0]), y - int(line[1]), fill="green",width=3)
+    x += int(line[0])
+
+def steny():
+    en = int(entry.get())
+    xx = 10
+    yy = 230
+    for l in range(len(budovy)-1):
+        vys = int(budovy[l][1])
+        vys2 = int(budovy[l+1][1])
+        rozdiel = abs(vys2 - vys)
+        if vys != 0 and vys2 != 0:
+            if rozdiel >= en:
+                xx += int(budovy[l][0])
+                canvas.create_line(xx,yy-vys,xx,yy-vys2,fill="red",width=2)
+            else:
+                xx += int(budovy[l][0])
+        else:
+            xx += int(budovy[l][0])
+
+entry = tk.Entry(win)
+entry.place(x=350,y=260)
+button = tk.Button(win, text="vykresli",command=steny)
+button.place(x=400,y=280)
+
+win.mainloop()
